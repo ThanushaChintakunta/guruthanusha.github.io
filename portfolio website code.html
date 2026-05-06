@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chintakunta Guru Thanusha | Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --card: #16161f;
+      --border: #2a2a3a;
+      --accent: #7c3aed;
+      --accent2: #a855f7;
+      --accent3: #06b6d4;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --glow: rgba(124, 58, 237, 0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.1rem; font-weight: 500;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(6,182,212,0.12) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      text-align: center; max-width: 800px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 999px; padding: 0.4rem 1rem;
+      font-size: 0.8rem; color: var(--accent2);
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .hero-name .first { color: var(--text); }
+    .hero-name .last {
+      background: linear-gradient(135deg, var(--accent2) 0%, var(--accent3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted); font-weight: 400; margin-bottom: 1.5rem;
+    }
+    .hero-role .typed {
+      color: var(--accent3);
+      font-family: 'Fira Code', monospace;
+      border-right: 2px solid var(--accent3);
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 50%{border-color:transparent} }
+
+    .hero-desc {
+      font-size: 1rem; color: var(--muted);
+      max-width: 560px; margin: 0 auto 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; transition: all 0.25s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      box-shadow: 0 4px 20px var(--glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--glow); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center;
+      margin-top: 3.5rem; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 1.8rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem; color: var(--accent2);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .section-line {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      border-radius: 2px; margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-avatar {
+      display: flex; justify-content: center;
+    }
+    .avatar-ring {
+      width: 260px; height: 260px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      padding: 4px; position: relative;
+    }
+    .avatar-inner {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+    .about-info { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .info-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .info-row i { color: var(--accent2); width: 18px; }
+    .info-row span { color: var(--muted); }
+    .info-row a { color: var(--accent3); text-decoration: none; }
+    .info-row a:hover { text-decoration: underline; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem;
+      transition: all 0.3s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(124,58,237,0.15);
+      transform: translateY(-4px);
+    }
+    .skill-card-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;
+    }
+    .skill-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .skill-card-title { font-weight: 700; font-size: 1rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.25);
+      color: var(--accent2); border-radius: 6px;
+      padding: 0.3rem 0.75rem; font-size: 0.8rem;
+      font-family: 'Fira Code', monospace;
+    }
+    .tag.cyan {
+      background: rgba(6,182,212,0.1);
+      border-color: rgba(6,182,212,0.25);
+      color: var(--accent3);
+    }
+    .tag.green {
+      background: rgba(34,197,94,0.1);
+      border-color: rgba(34,197,94,0.25);
+      color: #4ade80;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem; }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 12px 40px rgba(124,58,237,0.15); }
+    .project-card:hover::before { opacity: 1; }
+    .project-emoji { font-size: 2.2rem; margin-bottom: 1rem; }
+    .project-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-desc { color: var(--muted); font-size: 0.9rem; flex: 1; margin-bottom: 1.25rem; line-height: 1.7; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* ── RESUME ── */
+    #resume { background: var(--bg); }
+    .resume-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 3rem;
+      text-align: center; max-width: 600px; margin: 0 auto;
+      position: relative; overflow: hidden;
+    }
+    .resume-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.12) 0%, transparent 70%);
+    }
+    .resume-box > * { position: relative; z-index: 1; }
+    .resume-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .resume-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .resume-box p { color: var(--muted); margin-bottom: 2rem; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      text-align: center; text-decoration: none;
+      transition: all 0.3s; display: block;
+    }
+    .contact-card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(124,58,237,0.15); }
+    .contact-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin: 0 auto 1rem;
+    }
+    .contact-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .contact-value { font-size: 0.9rem; font-weight: 600; color: var(--text); word-break: break-all; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.85rem;
+    }
+    footer span { color: var(--accent2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-avatar { order: -1; }
+      .avatar-ring { width: 180px; height: 180px; }
+      .avatar-inner { font-size: 4rem; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
+    }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">&lt;Thanusha /></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span></span> Open to Opportunities
+    </div>
+    <h1 class="hero-name">
+      <span class="first">Guru </span><span class="last">Thanusha</span>
+    </h1>
+    <p class="hero-role">
+      <span class="typed" id="typed-text"></span>
+    </p>
+    <p class="hero-desc">
+      Computer Science (Data Science) undergraduate passionate about building efficient,
+      innovative software solutions. Strong in Java, DSA, and web technologies.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
+      <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">9.49</div><div class="stat-label">CGPA</div></div>
+      <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Projects</div></div>
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Certificates</div></div>
+      <div class="stat"><div class="stat-num">2025</div><div class="stat-label">FOSS Coordinator</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// who am i</p>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-avatar fade-up">
+        <div class="avatar-ring">
+          <div class="avatar-inner">👩‍💻</div>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <p>
+          Hi! I'm <strong>Chintakunta Guru Thanusha</strong>, a motivated Computer Science
+          (Data Science) student at Mohan Babu University, currently in my second year with
+          a stellar CGPA of <strong>9.49</strong>.
+        </p>
+        <p>
+          I have a strong interest in software development and problem solving, with hands-on
+          experience in Java, Python, and web technologies. I enjoy building real-world
+          applications that solve meaningful problems.
+        </p>
+        <p>
+          Beyond coding, I serve as the <strong>FOSS Club Coordinator</strong> for CSE (Data Science),
+          where I organize hackathons, workshops, and promote open-source culture among students.
+        </p>
+        <div class="about-info">
+          <div class="info-row"><i class="fas fa-map-marker-alt"></i><span>Tirupati, Andhra Pradesh</span></div>
+          <div class="info-row"><i class="fas fa-university"></i><span>Mohan Babu University (2023–2027)</span></div>
+          <div class="info-row"><i class="fas fa-envelope"></i><a href="mailto:guruthanusha211@gmail.com">guruthanusha211@gmail.com</a></div>
+          <div class="info-row"><i class="fab fa-linkedin"></i><a href="https://www.linkedin.com/in/guru-thanusha-817ba1378" target="_blank">linkedin.com/in/guru-thanusha</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// what i know</p>
+      <h2 class="section-title">Skills & Technologies</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(124,58,237,0.15)">☕</div>
+          <div class="skill-card-title">Programming Languages</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(6,182,212,0.15)">🧠</div>
+          <div class="skill-card-title">Core Concepts</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag cyan">Data Structures & Algorithms</span>
+          <span class="tag cyan">OOP</span>
+          <span class="tag cyan">DBMS</span>
+        </div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(34,197,94,0.15)">🌐</div>
+          <div class="skill-card-title">Web Technologies</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag green">HTML5</span>
+          <span class="tag green">CSS3</span>
+          <span class="tag green">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(251,191,36,0.15)">🗄️</div>
+          <div class="skill-card-title">Database</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fbbf24">SQL</span>
+          <span class="tag" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fbbf24">DBMS</span>
+        </div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(244,63,94,0.15)">🤝</div>
+          <div class="skill-card-title">Professional Skills</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Problem Solving</span>
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Teamwork</span>
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Time Management</span>
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Adaptability</span>
+        </div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(124,58,237,0.15)">🏆</div>
+          <div class="skill-card-title">Certifications</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">IBM Web Dev (PBL)</span>
+          <span class="tag">Java & DSA – AFE</span>
+          <span class="tag">CSR Survey</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// what i've built</p>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🚌</div>
+        <h3 class="project-title">MBU Smart Transport</h3>
+        <p class="project-desc">
+          A web application developed during a hackathon to provide students with easy access
+          to campus transport information. Features a responsive, user-friendly interface
+          with real-time transport schedules and route details.
+        </p>
+        <div class="project-tech">
+          <span class="tag green">HTML</span>
+          <span class="tag green">CSS</span>
+          <span class="tag green">JavaScript</span>
+          <span class="tag cyan">Hackathon</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🎉</div>
+        <h3 class="project-title">Events India</h3>
+        <p class="project-desc">
+          A responsive event discovery web application to explore events across different
+          cities in India. Includes event listings with categories, dates, and detailed
+          descriptions — fully compatible across desktop and mobile devices.
+        </p>
+        <div class="project-tech">
+          <span class="tag green">HTML</span>
+          <span class="tag green">CSS</span>
+          <span class="tag green">JavaScript</span>
+          <span class="tag cyan">Responsive Design</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🦁</div>
+        <h3 class="project-title">Anti-Poaching System</h3>
+        <p class="project-desc">
+          An IoT-based wildlife protection system designed to detect and prevent poaching
+          activities. Leverages sensor data and smart alerts to help conserve endangered
+          species and protect natural habitats.
+        </p>
+        <div class="project-tech">
+          <span class="tag">IoT</span>
+          <span class="tag cyan">Sensors</span>
+          <span class="tag" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);color:#4ade80">Wildlife Tech</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RESUME ── -->
+<section id="resume">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// my resume</p>
+      <h2 class="section-title">Download Resume</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="resume-box fade-up">
+      <div class="resume-icon">📄</div>
+      <h3>Chintakunta Guru Thanusha</h3>
+      <p>Software Engineer Undergraduate · B.Tech CSE (Data Science) · CGPA 9.49<br/>
+      Mohan Babu University, Tirupati, Andhra Pradesh</p>
+      <a href="main thanusha resume.docx" download class="btn btn-primary" style="display:inline-flex;margin:0 auto">
+        <i class="fas fa-download"></i> Download Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// reach me</p>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="section-line"></div>
+80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Python</span>
+              <span class="skill-bar-pct">60%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="60"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Concepts -->
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(6,182,212,0.15)">🧠</div>
+          <div class="skill-card-title">Core Concepts</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag cyan">DSA</span>
+          <span class="tag cyan">OOP</span>
+          <span class="tag cyan">DBMS</span>
+        </div>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Data Structures & Algorithms</span>
+              <span class="skill-bar-pct">75%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Object Oriented Programming</span>
+              <span class="skill-bar-pct">80%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">DBMS</span>
+              <span class="skill-bar-pct">70%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Web Technologies -->
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(34,197,94,0.15)">🌐</div>
+          <div class="skill-card-title">Web Technologies</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag green">HTML5</span>
+          <span class="tag green">CSS3</span>
+          <span class="tag green">JavaScript</span>
+        </div>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">HTML5</span>
+              <span class="skill-bar-pct">85%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">CSS3</span>
+              <span class="skill-bar-pct">80%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">JavaScript</span>
+              <span class="skill-bar-pct">65%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="65"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database -->
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(251,191,36,0.15)">🗄️</div>
+          <div class="skill-card-title">Database</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fbbf24">SQL</span>
+          <span class="tag" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fbbf24">DBMS</span>
+        </div>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">SQL</span>
+              <span class="skill-bar-pct">72%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="72"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Database Design</span>
+              <span class="skill-bar-pct">68%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="68"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Skills -->
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(244,63,94,0.15)">🤝</div>
+          <div class="skill-card-title">Professional Skills</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Problem Solving</span>
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Teamwork</span>
+          <span class="tag" style="background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.3);color:#fb7185">Adaptability</span>
+        </div>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Analytical Problem Solving</span>
+              <span class="skill-bar-pct">85%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Teamwork & Collaboration</span>
+              <span class="skill-bar-pct">90%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Time Management</span>
+              <span class="skill-bar-pct">80%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Adaptability</span>
+              <span class="skill-bar-pct">88%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="skill-card fade-up">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(124,58,237,0.15)">🏆</div>
+          <div class="skill-card-title">Certifications</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">IBM Web Dev</span>
+          <span class="tag">Java & DSA</span>
+          <span class="tag">CSR Survey</span>
+        </div>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">PBL Web Dev – IBM</span>
+              <span class="skill-bar-pct">100%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="100"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Java & DSA – AFE Bootcamp</span>
+              <span class="skill-bar-pct">100%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="100"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">CSR Baseline Survey</span>
+              <span class="skill-bar-pct">100%</span>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="100"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// what i've built</p>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🚌</div>
+        <h3 class="project-title">MBU Smart Transport</h3>
+        <p class="project-desc">
+          A web application developed during a hackathon to provide students with easy access
+          to campus transport information. Features a responsive, user-friendly interface
+          with real-time transport schedules and route details.
+        </p>
+        <div class="project-tech">
+          <span class="tag green">HTML</span>
+          <span class="tag green">CSS</span>
+          <span class="tag green">JavaScript</span>
+          <span class="tag cyan">Hackathon</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🎉</div>
+        <h3 class="project-title">Events India</h3>
+        <p class="project-desc">
+          A responsive event discovery web application to explore events across different
+          cities in India. Includes event listings with categories, dates, and detailed
+          descriptions — fully compatible across desktop and mobile devices.
+        </p>
+        <div class="project-tech">
+          <span class="tag green">HTML</span>
+          <span class="tag green">CSS</span>
+          <span class="tag green">JavaScript</span>
+          <span class="tag cyan">Responsive Design</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-emoji">🦁</div>
+        <h3 class="project-title">Anti-Poaching System</h3>
+        <p class="project-desc">
+          An IoT-based wildlife protection system designed to detect and prevent poaching
+          activities. Leverages sensor data and smart alerts to help conserve endangered
+          species and protect natural habitats.
+        </p>
+        <div class="project-tech">
+          <span class="tag">IoT</span>
+          <span class="tag cyan">Sensors</span>
+          <span class="tag green">Wildlife Tech</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RESUME ── -->
+<section id="resume">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// my resume</p>
+      <h2 class="section-title">Download Resume</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="resume-box fade-up">
+      <div class="resume-icon">📄</div>
+      <h3>Chintakunta Guru Thanusha</h3>
+      <p>Software Engineer Undergraduate · B.Tech CSE (Data Science) · CGPA 9.49<br/>
+      Mohan Babu University, Tirupati, Andhra Pradesh</p>
+      <a href="main thanusha resume.docx" download class="btn btn-primary" style="display:inline-flex;margin:0 auto">
+        <i class="fas fa-download"></i> Download Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-tag">// reach me</p>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid fade-up">
+
+      <a href="mailto:guruthanusha211@gmail.com" class="contact-card">
+        <div class="contact-icon" style="background:rgba(244,63,94,0.15);color:#fb7185">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">guruthanusha211@gmail.com</div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/guru-thanusha-817ba1378" target="_blank" class="contact-card">
+        <div class="contact-icon" style="background:rgba(6,182,212,0.15);color:#06b6d4">
+          <i class="fab fa-linkedin"></i>
+        </div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">guru-thanusha-817ba1378</div>
+      </a>
+
+      <a href="tel:+919381072315" class="contact-card">
+        <div class="contact-icon" style="background:rgba(34,197,94,0.15);color:#4ade80">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+91 93810 72315</div>
+      </a>
+
+      <a href="#" class="contact-card">
+        <div class="contact-icon" style="background:rgba(124,58,237,0.15);color:#a855f7">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Tirupati, Andhra Pradesh</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Designed & Built with <span>♥</span> by <span>Chintakunta Guru Thanusha</span> · © 2025</p>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script>
+  // Typing animation
+  const roles = [
+    "Software Engineer Undergraduate",
+    "Java Developer",
+    "Web Developer",
+    "DSA Enthusiast",
+    "FOSS Club Coordinator"
+  ];
+  let roleIndex = 0, charIndex = 0, deleting = false;
+  const typedEl = document.getElementById("typed-text");
+
+  function type() {
+    const current = roles[roleIndex];
+    if (!deleting) {
+      typedEl.textContent = current.slice(0, ++charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        setTimeout(type, 1800);
+        return;
+      }
+    } else {
+      typedEl.textContent = current.slice(0, --charIndex);
+      if (charIndex === 0) {
+        deleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+      }
+    }
+    setTimeout(type, deleting ? 55 : 90);
+  }
+  type();
+
+  // Scroll fade-in + skill bar animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add("visible");
+          // Animate skill bars inside this element
+          entry.target.querySelectorAll(".skill-bar-fill").forEach(bar => {
+            bar.style.width = bar.getAttribute("data-width") + "%";
+          });
+        }, i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-links a");
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute("id");
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute("href") === `#${current}` ? "var(--accent2)" : "";
+    });
+  });
+</script>
+
+</body>
+</html>
+
